@@ -5,34 +5,8 @@ const PORT = 3000;
 
 // Définir le schema de graphQL
 // Notre contrat: ce que nous offrons à travers notre server graphql
-const typeDefs = buildSchema(`
-    type Book {
-        title: String
-        author: String
-    }
-    #books query
-    type Query {
-        books: [Book]
-    }
-
-`);
-
-const books = [
-    {
-        title: "The Awakening",
-        author: "Kate Chopin",
-    },
-    {
-        title: "City of Glass",
-        author: "Paul Auster",
-    },
-];
-// implémentation du contrat
-const resolvers = {
-    Query: {
-        books: () => books,
-    },
-};
+import { typeDefs } from "./schema/todo";
+import { resolvers } from "./resolver/todo";
 
 const server = new ApolloServer({
     typeDefs,
