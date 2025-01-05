@@ -13,12 +13,11 @@ const todos = [
     },
 ];
 
-export const resolvers = {
+export const TodosResolver = {
     Query: {
         todos: () => todos,
         getTodoById(parent: any, args: any, contextValue: any, info: any) {
             const todo = todos.find((todo) => todo.id === args.id);
-            console.log(info);
             if (!todo) {
                 throw new Error(`Not found todo with  id=${args.id}`);
             }
