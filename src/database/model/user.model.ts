@@ -1,13 +1,7 @@
 import mongoose, { Schema } from "mongoose";
 import bcrypt from "bcryptjs";
+import { IUser } from "../../interface/user.interface";
 
-interface IUser {
-    userName: String;
-    local: {
-        email: string;
-        password: string;
-    };
-}
 const userSchema = new Schema(
     {
         userName: { type: String, required: true },

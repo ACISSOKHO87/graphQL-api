@@ -10,6 +10,6 @@ export const todosSchema = buildSchema(`
         
     type Query {
         getTodoById(id: Int!): Todo!
-        todos: [Todo!]
+        getTodos: [Todo!]!
     }
 `);

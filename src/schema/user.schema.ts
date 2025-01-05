@@ -6,24 +6,27 @@ export const usersSchema = buildSchema(`
         email: String!
         password: String!
     }
+
+    type UserForm {
+        userName: String!
+        email: String!
+        password: String!
+    }
+
+
     type User {
-        id: Int!
+        id: String!
         userName: String!
         local: IUserLocal!
     }
 
     type Query {
         users: [User!]!
-        getUserById(id: Int!): User!
+        getUserById(id: String!): User!
         getUserByEmail(email: String!): User!
     }
 
-`);
-
-/*
-type infoResponse {
-        succes: Boolean!
-        users: [User!]!
+    type Mutation {
+        registerUser(userName: String!, email: String!, password: String!): User!
     }
-
-*/
+`);
