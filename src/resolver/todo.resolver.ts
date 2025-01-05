@@ -4,18 +4,20 @@ const todos = [
         done: false,
         edit: false,
         content: "Learning graphQL",
+        userId: 1,
     },
     {
         id: 2,
         done: false,
         edit: false,
         content: "Learning git/GitlabCICD",
+        userId: 2,
     },
 ];
 
 export const TodosResolver = {
     Query: {
-        todos: () => todos,
+        getTodos: () => todos,
         getTodoById(parent: any, args: any, contextValue: any, info: any) {
             const todo = todos.find((todo) => todo.id === args.id);
             if (!todo) {
