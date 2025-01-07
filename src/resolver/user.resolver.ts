@@ -69,16 +69,16 @@ export const UsersResolver = {
         ) => {
             try {
                 const user = await User.findOne({
-                    "local.email": args.email,
+                    "local.email": args.user.email,
                 });
                 if (user) {
                     throw new Error("L'email existe déjà");
                 }
                 const newUser = new User({
-                    userName: args.userName,
+                    userName: args.user.userName,
                     local: {
-                        email: args.email,
-                        password: args.password,
+                        email: args.user.email,
+                        password: args.user.password,
                     },
                 });
                 return newUser.save();

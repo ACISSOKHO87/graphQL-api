@@ -7,7 +7,7 @@ const PORT = 3000;
 dotenv.config();
 // Définir le schema de graphQL
 // Notre contrat: ce que nous offrons à travers notre server graphql
-import { mergedSchema as typeDefs } from "./schema";
+import { mergedSchema, mergedSchema as typeDefs } from "./schema";
 import { resolvers } from "./resolver";
 import { connectDB } from "./database";
 
@@ -16,7 +16,6 @@ const server = new ApolloServer({
     resolvers,
     introspection: true,
 });
-
 const start = async () => {
     try {
         await connectDB(process.env.DB_URI!);

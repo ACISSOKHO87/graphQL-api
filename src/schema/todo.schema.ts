@@ -1,6 +1,6 @@
 import { buildSchema } from "graphql";
 
-export const todosSchema = buildSchema(`
+export const todosSchema = buildSchema(`#graphql
     type Todo {
         id: Int!
         content: String!
