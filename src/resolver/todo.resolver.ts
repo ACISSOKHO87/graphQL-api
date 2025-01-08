@@ -1,29 +1,33 @@
-const todos = [
-    {
-        id: 1,
-        done: false,
-        edit: false,
-        content: "Learning graphQL",
-        userId: 1,
-    },
-    {
-        id: 2,
-        done: false,
-        edit: false,
-        content: "Learning git/GitlabCICD",
-        userId: 2,
-    },
-];
+import { Todo } from "../database/model/todo.model";
 
 export const TodosResolver = {
     Query: {
-        getTodos: () => todos,
-        getTodoById(parent: any, args: any, contextValue: any, info: any) {
-            const todo = todos.find((todo) => todo.id === args.id);
-            if (!todo) {
-                throw new Error(`Not found todo with  id=${args.id}`);
+        getTodos: async () => {
+            return await Todo.find();
+        },
+        getTodoById: async (_: any, args: any) => {
+            try {
+                const todo = Todo.findById(args.id);
+                if (!todo) {
+                    throw new Error(`Not found todo with  id=${args.id}`);
+                }
+                return todo;
+            } catch (error) {
+                throw new Error("Incident technique");
             }
-            return todo;
+        },
+    },
+
+    Mutation: {
+        registerTodo: async (_: any, args: any) => {
+            try {
+                const newTodo = new Todo({
+                    ...args.todo,
+                });
+                return newTodo.save();
+            } catch (error) {
+                throw Error("Incident technique");
+            }
         },
     },
 };

@@ -7,7 +7,11 @@ const PORT = 3000;
 dotenv.config();
 // Définir le schema de graphQL
 // Notre contrat: ce que nous offrons à travers notre server graphql
-import { mergedSchema, mergedSchema as typeDefs } from "./schema";
+// import { UsersSchema as typeDefs } from "./schema/user.schema";
+// import { UsersResolver as resolvers } from "./resolver/user.resolver";
+// import { TodosSchema as typeDefs } from "./schema/todo.schema";
+// import { TodosResolver as resolvers } from "./resolver/todo.resolver";
+import { mergedSchema as typeDefs } from "./schema";
 import { resolvers } from "./resolver";
 import { connectDB } from "./database";
 
