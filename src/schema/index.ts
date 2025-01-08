@@ -1,5 +1,5 @@
 import { mergeTypeDefs } from "@graphql-tools/merge";
-import { todosSchema } from "./todo.schema";
-import { usersSchema } from "./user.schema";
+import { TodosSchema } from "./todo.schema";
+import { UsersSchema } from "./user.schema";
 
-export const mergedSchema = mergeTypeDefs([usersSchema, todosSchema]);
+export const mergedSchema = mergeTypeDefs([UsersSchema, TodosSchema]);

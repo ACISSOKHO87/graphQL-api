@@ -13,9 +13,9 @@ const todoSchema = new Schema(
         content: { type: String, required: true },
         done: { type: Boolean, default: false },
         edit: { type: Boolean, default: false },
-        userId: { type: Schema.Types.ObjectId, ref: "user" },
+        userId: { type: Schema.Types.ObjectId, ref: "user", required: true },
     },
     { collection: "todos" }
 );
 
-export const Todo = mongoose.model<ITodo>("user", todoSchema);
+export const Todo = mongoose.model<ITodo>("todo", todoSchema);

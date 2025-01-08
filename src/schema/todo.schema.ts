@@ -1,15 +1,31 @@
 import { buildSchema } from "graphql";
 
-export const todosSchema = buildSchema(`#graphql
+export const TodosSchema = buildSchema(`#graphql
     type Todo {
-        id: Int!
+        id: String!
         content: String!
         done: Boolean!
         edit: Boolean!
     }
         
     type Query {
-        getTodoById(id: Int!): Todo!
         getTodos: [Todo!]!
+        getTodoById(id: String!): Todo!
+    }
+
+    type Mutation {
+        registerTodo(todo: AddDataTodo): Todo!
+        updateTodo(todo: EditDataTodo): Todo!
+        deleteTodo(id: String!): Todo!
+    }
+
+    input AddDataTodo {
+        content: String!,
+        userId: String!
+    }
+    input EditDataTodo {
+        content: String,
+        done: Boolean,
+        edit: Boolean
     }
 `);
