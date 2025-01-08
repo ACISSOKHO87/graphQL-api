@@ -21,7 +21,7 @@ export const UsersSchema = buildSchema(`#graphql
     type Mutation {
         registerUser(user: AddDataUser!): User!
         loginUser(user: LoginDataUser!): User!
-        updateUserPassword(id: String!, password: String! ): User!
+        updateUserPassword(user: UpdatePassword ): User!
     }
 
     input AddDataUser {
@@ -32,6 +32,11 @@ export const UsersSchema = buildSchema(`#graphql
 
     input LoginDataUser {
         email: String!,
+        password: String!
+    }
+
+    input UpdatePassword {
+        id: String!,
         password: String!
     }
 

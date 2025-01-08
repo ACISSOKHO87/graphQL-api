@@ -1,6 +1,6 @@
 import { User } from "../database/model/user.model";
 import { UserForm } from "../interface/user.interface";
-
+import bcrypt from "bcryptjs";
 export const UsersResolver = {
     Query: {
         users: async () => {
@@ -20,7 +20,7 @@ export const UsersResolver = {
                 }
                 return user;
             } catch (error) {
-                throw Error("Incident technique");
+                throw error;
             }
         },
         getUserByEmail: async (
@@ -36,18 +36,13 @@ export const UsersResolver = {
                 }
                 return user;
             } catch (error) {
-                throw Error("Incident technique");
+                throw error;
             }
         },
     },
 
     Mutation: {
-        registerUser: async (
-            parent: any,
-            args: any,
-            context: any,
-            info: any
-        ) => {
+        registerUser: async (_: any, args: any) => {
             try {
                 const user = await User.findOne({
                     "local.email": args.user.email,
@@ -64,7 +59,52 @@ export const UsersResolver = {
                 });
                 return newUser.save();
             } catch (error) {
-                throw Error("Incident technique");
+                throw error;
+            }
+        },
+        loginUser: async (_: any, args: any) => {
+            try {
+                console.log(args.user.email);
+                const user = await User.findOne({
+                    "local.email": args.user.email,
+                });
+                console.log("user: ", user);
+                if (!user) {
+                    throw new Error("Email ou mot de passe invalide");
+                } else {
+                    const compare = await user.isValidPassword(
+                        args.user.password
+                    );
+                    if (!compare) {
+                        throw new Error("Email ou mot de passe invalide");
+                    }
+                    return user;
+                }
+            } catch (error) {
+                throw error;
+            }
+        },
+        updateUserPassword: async (_: any, args: any) => {
+            try {
+                const user = await User.findById(args.user.id);
+                if (!user) {
+                    throw new Error("L'utilisateur n'existe pas");
+                } else {
+                    const salt = await bcrypt.genSalt(12);
+                    const hash = await bcrypt.hash(args.user.password, salt);
+
+                    const updatedUser = await User.findByIdAndUpdate(
+                        args.user.id,
+                        {
+                            ...user,
+                            "local.password": hash,
+                        },
+                        { new: true }
+                    );
+                    return updatedUser;
+                }
+            } catch (error) {
+                throw error;
             }
         },
     },
