@@ -1,3 +1,4 @@
+import { Todo } from "../database/model/todo.model";
 import { User } from "../database/model/user.model";
 import { UserForm } from "../interface/user.interface";
 import bcrypt from "bcryptjs";
@@ -7,12 +8,7 @@ export const UsersResolver = {
             const users = await User.find();
             return users;
         },
-        getUserById: async (
-            parent: any,
-            args: any,
-            context: any,
-            info: any
-        ) => {
+        user: async (parent: any, args: any) => {
             try {
                 const user = await User.findById(args.id);
                 if (!user) {
@@ -23,24 +19,13 @@ export const UsersResolver = {
                 throw error;
             }
         },
-        getUserByEmail: async (
-            parent: any,
-            args: any,
-            context: any,
-            info: any
-        ) => {
-            try {
-                const user = await User.findOne({ "local.email": args.email });
-                if (!user) {
-                    throw new Error(` Not found user by email=${args.email}`);
-                }
-                return user;
-            } catch (error) {
-                throw error;
-            }
-        },
     },
 
+    User: {
+        todo: async function (parent: any) {
+            return await Todo.findOne({ userId: parent.id });
+        },
+    },
     Mutation: {
         registerUser: async (_: any, args: any) => {
             try {
