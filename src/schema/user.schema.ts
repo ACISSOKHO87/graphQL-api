@@ -1,8 +1,10 @@
 import { buildSchema } from "graphql";
+import { gql } from "graphql-tag";
 
-export const UsersSchema = buildSchema(`#graphql
-    
-    type IUserLocal{
+export const UsersSchema = gql`
+    #graphql
+
+    type IUserLocal {
         email: String
         password: String
     }
@@ -10,34 +12,33 @@ export const UsersSchema = buildSchema(`#graphql
         id: String!
         userName: String!
         local: IUserLocal!
+        todo: Todo!
     }
 
     type Query {
         users: [User!]!
-        getUserById(id: String!): User!
-        getUserByEmail(email: String!): User!
+        user(id: String!): User!
     }
 
     type Mutation {
         registerUser(user: AddDataUser!): User!
         loginUser(user: LoginDataUser!): User!
-        updateUserPassword(user: UpdatePassword ): User!
+        updateUserPassword(user: UpdatePassword): User!
     }
 
     input AddDataUser {
-        userName: String!,
-        email: String!,
+        userName: String!
+        email: String!
         password: String!
     }
 
     input LoginDataUser {
-        email: String!,
+        email: String!
         password: String!
     }
 
     input UpdatePassword {
-        id: String!,
+        id: String!
         password: String!
     }
-
-`);
+`;

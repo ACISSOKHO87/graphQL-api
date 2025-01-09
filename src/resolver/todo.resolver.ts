@@ -1,11 +1,11 @@
 import { Todo } from "../database/model/todo.model";
-
+import { User } from "../database/model/user.model";
 export const TodosResolver = {
     Query: {
-        getTodos: async () => {
+        todos: async () => {
             return await Todo.find();
         },
-        getTodoById: async (_: any, args: any) => {
+        todo: async (parent: any, args: any) => {
             try {
                 const todo = Todo.findById(args.id);
                 if (!todo) {
@@ -13,8 +13,14 @@ export const TodosResolver = {
                 }
                 return todo;
             } catch (error) {
-                throw new Error("Incident technique");
+                throw error;
             }
+        },
+    },
+
+    Todo: {
+        user: async function (parent: any) {
+            return await User.findById(parent.userId);
         },
     },
 
@@ -26,7 +32,29 @@ export const TodosResolver = {
                 });
                 return newTodo.save();
             } catch (error) {
-                throw Error("Incident technique");
+                throw error;
+            }
+        },
+        editContentTodo: async (_: any, args: any) => {
+            try {
+                const todo = await Todo.findById(args.id);
+                if (!todo) {
+                    throw new Error(`Not found todo with id= ${args.id}`);
+                } else {
+                    const editTodo = await Todo.findByIdAndUpdate(
+                        args.id,
+                        {
+                            ...todo,
+                            content: args.todo.content,
+                            edit: args.todo.edit,
+                        },
+                        { new: true }
+                    );
+                    console.log(editTodo);
+                    return editTodo;
+                }
+            } catch (error) {
+                throw error;
             }
         },
     },
