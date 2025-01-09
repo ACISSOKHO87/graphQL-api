@@ -41,18 +41,75 @@ export const TodosResolver = {
                 if (!todo) {
                     throw new Error(`Not found todo with id= ${args.id}`);
                 } else {
+                    const toEdit = {
+                        ...todo,
+                    };
                     const editTodo = await Todo.findByIdAndUpdate(
                         args.id,
                         {
-                            ...todo,
-                            content: args.todo.content,
-                            edit: args.todo.edit,
+                            $set: {
+                                content: args.todo.content,
+                                edit: args.todo.edit,
+                            },
                         },
                         { new: true }
                     );
-                    console.log(editTodo);
                     return editTodo;
                 }
+            } catch (error) {
+                throw error;
+            }
+        },
+        modifyDoneTodo: async (_: any, args: any) => {
+            try {
+                const todo = await Todo.findById(args.id);
+                if (!todo) {
+                    throw new Error(`Not found todo with id= ${args.id}`);
+                } else {
+                    const doneTodo = await Todo.findByIdAndUpdate(
+                        args.id,
+                        {
+                            $set: {
+                                done: !todo.done,
+                            },
+                        },
+                        { new: true }
+                    );
+                    return doneTodo;
+                }
+            } catch (error) {
+                throw error;
+            }
+        },
+        modifyEditTodo: async (_: any, args: any) => {
+            try {
+                const todo = await Todo.findById(args.id);
+                if (!todo) {
+                    throw new Error(`Not found todo with id= ${args.id}`);
+                } else {
+                    const editTodo = await Todo.findByIdAndUpdate(
+                        args.id,
+                        {
+                            $set: {
+                                edit: !todo.edit,
+                            },
+                        },
+                        { new: true }
+                    );
+                    return editTodo;
+                }
+            } catch (error) {
+                throw error;
+            }
+        },
+        deleteTodo: async (_: any, args: any) => {
+            try {
+                const deleted = await Todo.findOneAndDelete(args.id);
+                return {
+                    success: true,
+                    message: ` Todo with deleted sucessfuly`,
+                    id: deleted?.id,
+                };
             } catch (error) {
                 throw error;
             }

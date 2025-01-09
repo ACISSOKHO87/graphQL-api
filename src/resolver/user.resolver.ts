@@ -49,11 +49,9 @@ export const UsersResolver = {
         },
         loginUser: async (_: any, args: any) => {
             try {
-                console.log(args.user.email);
                 const user = await User.findOne({
                     "local.email": args.user.email,
                 });
-                console.log("user: ", user);
                 if (!user) {
                     throw new Error("Email ou mot de passe invalide");
                 } else {

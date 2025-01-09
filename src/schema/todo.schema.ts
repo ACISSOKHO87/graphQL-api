@@ -10,6 +10,12 @@ export const TodosSchema = gql`
         user: User!
     }
 
+    type DeleteTodoResponse {
+        success: Boolean!
+        message: String!
+        id: String!
+    }
+
     type Query {
         todos: [Todo!]!
         todo(id: String!): Todo!
@@ -20,7 +26,7 @@ export const TodosSchema = gql`
         editContentTodo(id: String!, todo: EditDataTodo!): Todo!
         modifyDoneTodo(id: String!): Todo!
         modifyEditTodo(id: String!): Todo!
-        deleteTodo(id: String!): Todo!
+        deleteTodo(id: String!): DeleteTodoResponse!
     }
 
     input AddDataTodo {
