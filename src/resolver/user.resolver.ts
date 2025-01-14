@@ -22,10 +22,11 @@ export const UsersResolver = {
     },
 
     User: {
-        todo: async function (parent: any) {
-            return await Todo.findOne({ userId: parent.id });
+        todos: async function (parent: any) {
+            return await Todo.find({ userId: parent.id });
         },
     },
+
     Mutation: {
         registerUser: async (_: any, args: any) => {
             try {

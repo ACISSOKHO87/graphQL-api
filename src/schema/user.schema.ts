@@ -12,7 +12,7 @@ export const UsersSchema = gql`
         id: String!
         userName: String!
         local: IUserLocal!
-        todo: Todo!
+        todos: [Todo!]
     }
 
     type Query {
