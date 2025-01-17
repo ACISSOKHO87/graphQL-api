@@ -1,4 +1,3 @@
-import { buildSchema } from "graphql";
 import { gql } from "graphql-tag";
 
 export const UsersSchema = gql`
@@ -15,6 +14,10 @@ export const UsersSchema = gql`
         todos: [Todo!]
     }
 
+    type LoginResponse {
+        token: String!
+        user: User!
+    }
     type Query {
         users: [User!]!
         user(id: String!): User!
@@ -22,7 +25,7 @@ export const UsersSchema = gql`
 
     type Mutation {
         registerUser(user: AddDataUser!): User!
-        loginUser(user: LoginDataUser!): User!
+        loginUser(user: LoginDataUser!): LoginResponse!
         updateUserPassword(user: UpdatePassword): User!
     }
 
